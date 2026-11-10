@@ -8,17 +8,16 @@ const PORT = 3000;
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
-// Allow CSS, images, and JavaScript files
+// Static files
 app.use(express.static(path.join(__dirname, "public")));
 
-// Allow form data
+// Form data
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// Homepage
-app.get("/", (req, res) => {
-    res.render("home");
-});
+// Routes
+const pageRoutes = require("./routes/pageRoutes");
+app.use("/", pageRoutes);
 
 // Start the server
 app.listen(PORT, () => {
