@@ -3,7 +3,8 @@ const router = express.Router();
 
 const pageController = require("../controllers/pageController");
 
-// Homepage route
 router.get("/", pageController.showHome);
+router.get("/games", pageController.showGames);
+router.get("/about", pageController.showAbout);
 
 module.exports = router;

@@ -2,4 +2,12 @@ const showHome = (req, res) => {
     res.render("home");
 };
 
-module.exports = { showHome };
+const showGames = (req, res) => {
+    res.render("games");
+};
+
+const showAbout = (req, res) => {
+    res.render("about");
+};
+
+module.exports = { showHome, showGames, showAbout };
