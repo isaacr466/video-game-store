@@ -1,4 +1,3 @@
-
 class Game {
     constructor(id, title, platform, price, description, quantity) {
         this.id = id;

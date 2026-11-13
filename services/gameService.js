@@ -1,4 +1,3 @@
-
 const Game = require("./Game");
 
 // Create video game objects
