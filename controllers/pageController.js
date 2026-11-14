@@ -23,6 +23,8 @@ const registerUser = (req, res) => {
         const { name, email } = req.body;
         const user = userService.registerUser(name, email);
 
+        req.session.userId = user.id;
+
         res.send(`
             <h1>Registration Successful!</h1>
             <p>Welcome, ${escapeHtml(user.name)}!</p>

@@ -15,9 +15,26 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+const session = require("express-session");
+const crypto = require("crypto");
+
+// Sessions for registered users
+app.use(session({
+    secret: process.env.SESSION_SECRET || crypto.randomBytes(32).toString("hex"),
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        httpOnly: true,
+        sameSite: "lax"
+    }
+}));
+
 // Routes
 const pageRoutes = require("./routes/pageRoutes");
 app.use("/", pageRoutes);
+
+const cartRoutes = require("./routes/cartRoutes");
+app.use("/", cartRoutes);
 
 // Start the server
 app.listen(PORT, () => {

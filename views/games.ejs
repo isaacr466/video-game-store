@@ -18,6 +18,19 @@
             <%= game.isAvailable() ? "In Stock" : "Out of Stock" %>
         </p>
 
+<% if (game.isAvailable()) { %>
+    <form action="/cart/add" method="POST">
+        <input type="hidden" name="gameId"
+            value="<%= game.id %>">
+
+        <label>Quantity:</label>
+        <input type="number" name="quantity"
+            value="1" min="1" max="<%= game.quantity %>" required>
+
+        <button type="submit">Add to Cart</button>
+    </form>
+<% } %>
+
         <hr>
     </div>
 <% }); %>
