@@ -1,0 +1,30 @@
+<%- include("partials/header") %>
+
+<h1>Your Order History</h1>
+
+<% if (orders.length === 0) { %>
+    <p>You haven't placed any orders yet.</p>
+    <a href="/games">Browse Games</a>
+<% } else { %>
+
+    <% orders.forEach(order => { %>
+        <div>
+            <h2>Order #<%= order.id %></h2>
+
+            <p>Date: <%= order.date.toLocaleString() %></p>
+            <p>Status: <%= order.status %></p>
+            <p>Total: $<%= order.total.toFixed(2) %></p>
+
+            <a href="/orders/<%= order.id %>">
+                View Order Details
+            </a>
+
+            <hr>
+        </div>
+    <% }); %>
+
+<% } %>
+
+<a href="/games">Continue Shopping</a>
+
+<%- include("partials/footer") %>

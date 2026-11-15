@@ -36,6 +36,9 @@ app.use("/", pageRoutes);
 const cartRoutes = require("./routes/cartRoutes");
 app.use("/", cartRoutes);
 
+const orderRoutes = require("./routes/orderRoutes");
+app.use("/", orderRoutes);
+
 // Start the server
 app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);

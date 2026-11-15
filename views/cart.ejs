@@ -39,6 +39,10 @@
 
     <h2>Total: $<%= cart.getTotal().toFixed(2) %></h2>
 
+    <form action="/checkout" method="POST">
+       <button type="submit">Place Order</button>
+    </form>
+
     <a href="/games">Continue Shopping</a>
 
 <% } %>
