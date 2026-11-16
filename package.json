@@ -2,7 +2,7 @@
   "name": "video-game-store",
   "version": "1.0.0",
   "description": "Video Game Store Web Application for CSCI 3330",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
