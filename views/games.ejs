@@ -3,39 +3,59 @@
 <h1>Our Video Games</h1>
 <p>Browse our collection of video games.</p>
 
-<% games.forEach(game => { %>
-    <div>
-        <h2><%= game.title %></h2>
+<div class="games-grid">
 
-        <p>Platform: <%= game.platform %></p>
+    <% games.forEach(game => { %>
+        <div class="game-card">
 
-        <p>Price: $<%= game.price.toFixed(2) %></p>
+            <img
+                src="<%= game.getImage() %>"
+                alt="<%= game.title %> cover"
+                class="game-cover"
+            >
 
-        <p>Description: <%= game.description %></p>
+            <h2><%= game.title %></h2>
 
-        <p>
-            Availability:
-            <%= game.isAvailable() ? "In Stock" : "Out of Stock" %>
-        </p>
+            <p>Platform: <%= game.platform %></p>
 
-<% if (game.isAvailable()) { %>
-    <form action="/cart/add" method="POST">
-        <input type="hidden" name="gameId"
-            value="<%= game.id %>">
+            <p>Price: $<%= game.price.toFixed(2) %></p>
 
-        <label>Quantity:</label>
-        <input type="number" name="quantity"
-            value="1" min="1" max="<%= game.quantity %>" required>
+            <p>Description: <%= game.description %></p>
 
-        <button type="submit">Add to Cart</button>
-    </form>
-    <a href="/games/<%= game.id %>/reviews">
-        View Reviews
-    </a>
-<% } %>
+            <p>
+                Availability:
+                <%= game.isAvailable() ? "In Stock" : "Out of Stock" %>
+            </p>
 
-        <hr>
-    </div>
-<% }); %>
+            <% if (game.isAvailable()) { %>
+                <form action="/cart/add" method="POST">
+                    <input
+                        type="hidden"
+                        name="gameId"
+                        value="<%= game.id %>"
+                    >
+
+                    <label>Quantity:</label>
+                    <input
+                        type="number"
+                        name="quantity"
+                        value="1"
+                        min="1"
+                        max="<%= game.quantity %>"
+                        required
+                    >
+
+                    <button type="submit">Add to Cart</button>
+                </form>
+            <% } %>
+
+            <a href="/games/<%= game.id %>/reviews">
+                View Reviews
+            </a>
+
+        </div>
+    <% }); %>
+
+</div>
 
 <%- include("partials/footer") %>

@@ -19,34 +19,24 @@ const showRegister = (req, res) => {
 };
 
 const registerUser = (req, res) => {
+    let user;
+
     try {
         const { name, email } = req.body;
-        const user = userService.registerUser(name, email);
-
-        req.session.userId = user.id;
-
-        res.send(`
-            <h1>Registration Successful!</h1>
-            <p>Welcome, ${escapeHtml(user.name)}!</p>
-            <p>Your account ID is ${user.id}.</p>
-            <a href="/games">Browse Games</a>
-        `);
+        user = userService.registerUser(name, email);
     } catch (error) {
-        res.status(400).render("register", {
+        return res.status(400).render("register", {
             error: error.message
         });
     }
-};
 
-function escapeHtml(value) {
-    return String(value).replace(/[&<>"']/g, char => ({
-        "&": "&amp;",
-        "<": "&lt;",
-        ">": "&gt;",
-        '"': "&quot;",
-        "'": "&#39;"
-    })[char]);
-}
+    req.session.userId = user.id;
+
+    return res.render("registerSuccess", {
+        name: user.name,
+        userId: user.id
+    });
+};
 
 module.exports = {
     showHome,

@@ -1,7 +1,11 @@
 const express = require("express");
 const path = require("path");
+const helmet = require("helmet");
 
 const app = express();
+app.use(helmet({
+    contentSecurityPolicy: false
+}));
 const PORT = 3000;
 
 // Set up EJS
@@ -41,6 +45,17 @@ app.use("/", orderRoutes);
 
 const reviewRoutes = require("./routes/reviewRoutes");
 app.use("/", reviewRoutes);
+
+ // Handle pages that do not exist
+app.use((req, res) => {
+    res.status(404).send("404 - Page Not Found");
+});
+
+// Handle unexpected server errors
+app.use((err, req, res, next) => {
+    console.error(err);
+    res.status(500).send("Something went wrong. Please try again later.");
+});
 
 // Start the server
 app.listen(PORT, () => {

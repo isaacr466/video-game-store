@@ -11,6 +11,18 @@ class Game {
     isAvailable() {
         return this.quantity > 0;
     }
+
+    getImage() {
+        const images = {
+            1: "halo.jpg",
+            2: "minecraft.jpg",
+            3: "spiderman.jpg",
+            4: "mariokart.jpg",
+            5: "eldenring.jpg"
+        };
+
+        return "/images/" + images[this.id];
+    }
 }
 
 module.exports = Game;
