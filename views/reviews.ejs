@@ -1,0 +1,54 @@
+<%- include("partials/header") %>
+
+<h1>Reviews for <%= game.title %></h1>
+
+<p>Platform: <%= game.platform %></p>
+<p>Price: $<%= game.price.toFixed(2) %></p>
+
+<h2>Customer Reviews</h2>
+
+<% if (reviews.length === 0) { %>
+    <p>No reviews yet for this game.</p>
+<% } else { %>
+    <% reviews.forEach(review => { %>
+        <div>
+            <p>Rating: <%= review.rating %>/5 Stars</p>
+            <p><%= review.comment %></p>
+            <p>Date: <%= review.date.toLocaleDateString() %></p>
+            <hr>
+        </div>
+    <% }); %>
+<% } %>
+
+<h2>Write a Review</h2>
+
+<p>You must purchase this game before reviewing it.</p>
+
+<form action="/reviews/add" method="POST">
+    <input type="hidden" name="gameId" value="<%= game.id %>">
+
+    <label for="rating">Rating:</label>
+    <select name="rating" id="rating" required>
+        <option value="5">5 Stars</option>
+        <option value="4">4 Stars</option>
+        <option value="3">3 Stars</option>
+        <option value="2">2 Stars</option>
+        <option value="1">1 Star</option>
+    </select>
+
+    <br><br>
+
+    <label for="comment">Your Review:</label>
+    <br>
+    <textarea name="comment" id="comment"
+        rows="4" cols="40" maxlength="1000" required></textarea>
+
+    <br><br>
+
+    <button type="submit">Submit Review</button>
+</form>
+
+<br>
+<a href="/games">Back to Games</a>
+
+<%- include("partials/footer") %>
