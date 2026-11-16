@@ -1,12 +1,16 @@
 const express = require("express");
 const path = require("path");
 const helmet = require("helmet");
+const session = require("express-session");
+const crypto = require("crypto");
 
 const app = express();
+const PORT = 3000;
+
+// Security middleware
 app.use(helmet({
     contentSecurityPolicy: false
 }));
-const PORT = 3000;
 
 // Set up EJS
 app.set("view engine", "ejs");
@@ -18,9 +22,6 @@ app.use(express.static(path.join(__dirname, "public")));
 // Form data
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-
-const session = require("express-session");
-const crypto = require("crypto");
 
 // Sessions for registered users
 app.use(session({
@@ -46,7 +47,7 @@ app.use("/", orderRoutes);
 const reviewRoutes = require("./routes/reviewRoutes");
 app.use("/", reviewRoutes);
 
- // Handle pages that do not exist
+// Handle pages that do not exist
 app.use((req, res) => {
     res.status(404).send("404 - Page Not Found");
 });
@@ -54,7 +55,14 @@ app.use((req, res) => {
 // Handle unexpected server errors
 app.use((err, req, res, next) => {
     console.error(err);
-    res.status(500).send("Something went wrong. Please try again later.");
+
+    if (res.headersSent) {
+        return next(err);
+    }
+
+    res.status(500).send(
+        "Something went wrong. Please try again later."
+    );
 });
 
 // Start the server
